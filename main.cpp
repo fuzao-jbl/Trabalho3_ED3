@@ -23,9 +23,26 @@ int main()
     switch (n)
     {
         case 10:
+        {
             Grafo grafo(arquivo);
             grafo.printa_grafo();
             break;
+        }
+        case 11:
+        {
+            Grafo grafo(arquivo);
+            int numero_presas;
+            std::cin >> numero_presas;
+            for (int i = 0; i < numero_presas; i++)
+            {
+                std::string presa;
+                std::getline(std::cin, presa, '"'); // descarta o primeiro ' "' de todo string
+                std::getline(std::cin, presa, '"');
+                grafo.printa_cacadores(presa);
+                std::cout << std::endl;
+            }
+            break;
+        }
     }
 
     // fecha o arquivo

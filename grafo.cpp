@@ -101,8 +101,12 @@ void Vertice::poe_no_fim(const Aresta& aresta)
     _arestas.push_back(aresta);
 }
 
-Grafo::Grafo(std::vector<Registro> registros)
+bool Vertice::caca(std::string presa)
 {
+    for (Aresta aresta : _arestas)
+        if (aresta.nome() == presa)
+            return true;
+    return false;
 }
 
 Grafo::Grafo(std::ifstream& arquivo)
@@ -137,33 +141,31 @@ Grafo::Grafo(std::ifstream& arquivo)
     {
         Aresta aresta(registros[i]);
         int origem;
+        // elemento repetido
         for (origem = 0; origem < this->tamanho(); origem++)
             if (_adjacencias[origem].nome() == registros[i].nome())
                 break;
+        // faz fotossintese
         if (aresta.nome() == "sunlight")
-        {
             this->insere_sunlight(aresta, origem);
-            }
-            else if (aresta.peso() != -1)
-            {
-                // para cada alimento, precisamos buscar destino na lista encadeada
-                int destino;
-                for (destino = 0; destino < this->tamanho(); destino++)
-                    if (this->vertice(destino).nome() == aresta.nome())
-                        break;
-                this->insere_aresta(aresta, origem, destino);
-            }
+        // aresta existe
+        else if (aresta.peso() != -1)
+        {
+            // para cada alimento, precisamos buscar destino na lista encadeada
+            int destino;
+            for (destino = 0; destino < this->tamanho(); destino++)
+                if (this->vertice(destino).nome() == aresta.nome())
+                    break;
+            this->insere_aresta(aresta, origem, destino);
         }
+    }
 }
 
 void Grafo::insere_sunlight(Aresta aresta, int origem)
 {
     for (auto atual : _adjacencias[origem].arestas())
         if (atual.nome() == aresta.nome())
-        {
-            aresta.printa();
             return;
-        }
     _adjacencias[origem].insertion_sort(aresta);
     _adjacencias[origem].incrementa_saida();
     _adjacencias[origem].incrementa_grau();
@@ -229,4 +231,29 @@ void Grafo::printa_vertices()
                   << vertice.grau_entrada() << ", " << vertice.grau_saida() 
                   << ", " << vertice.grau() << std::endl;
     } 
+}
+
+void Grafo::printa_cacadores(std::string presa)
+{
+    // buscamos cacadores
+    std::vector<std::string> cacadores;
+    for (int i = 0; i < this->tamanho(); i++)
+        if (_adjacencias[i].caca(presa))
+            cacadores.push_back(_adjacencias[i].nome());
+    // checa se vazio
+    if (cacadores.empty())
+    {
+        std::cout << "Registro Inexistente." << std::endl;
+        return;
+    }
+    std::sort(cacadores.begin(), cacadores.end());
+    // printamos cacadores
+    std::cout << presa << ": ";
+    for (long unsigned int i = 0; i < cacadores.size(); i++)
+    {
+       if (i != cacadores.size() - 1)
+          std::cout << cacadores[i] << ", ";
+       else
+          std::cout << cacadores[i] << std::endl; 
+    }
 }

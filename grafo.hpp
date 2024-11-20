@@ -70,6 +70,7 @@ public:
     void incrementa_grau(){_grau++;}
     void printa_vertice();
     void ordena_arestas();
+    bool caca(std::string presa);
 };
 
 class Grafo
@@ -80,7 +81,6 @@ public:
     Grafo() : _adjacencias(){}
     Grafo(const Grafo& grafo) : _adjacencias(grafo._adjacencias){}
     Grafo(Grafo&& grafo) noexcept : _adjacencias(std::move(grafo._adjacencias)){}
-    Grafo(std::vector<Registro> registros);
     Grafo(std::ifstream& arquivo);
     // acessa parametros do grafo
     Vertice vertice(long unsigned int posicao){return _adjacencias[posicao];};
@@ -92,6 +92,7 @@ public:
     void printa_grafo();
     void escreve(std::string nome);
     void printa_vertices();
+    void printa_cacadores(std::string presa);
 };
 
 #endif
