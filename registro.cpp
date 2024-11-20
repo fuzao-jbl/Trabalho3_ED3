@@ -1,3 +1,5 @@
+// Pedro Fuziwara Filho - 13676840
+
 #include "registro.hpp"
 
 Registro::Registro(std::ifstream& arquivo, int offset)
@@ -23,4 +25,18 @@ Registro::Registro(std::ifstream& arquivo, int offset)
     std::getline(arquivo, _tipo, '#');
     std::getline(arquivo, _dieta, '#');
     std::getline(arquivo, _alimento, '#');
+}
+
+void Registro::printa_formatado()
+{
+    std::cout << "nome: " << _nome << std::endl
+        << "especie: " << _especie << std::endl
+        << "habitat: " << _habitat << std::endl
+        << "tipo: " << _tipo << std::endl
+        << "dieta: " << _dieta << std::endl
+        << "alimento: " << _alimento << std::endl
+        << "populacao: " << _populacao << std::endl
+        << "tamanho: " << _tamanho << std::endl
+        << "velocidade: " << _velocidade 
+        << " " << _unidadeMedida << "m" << std::endl;
 }

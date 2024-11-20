@@ -1,9 +1,12 @@
+// Pedro Fuziwara Filho - 13676840
+
 #ifndef REGISTRO
 #define REGISTRO
 
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <algorithm>
 
 class Registro 
 {
@@ -28,6 +31,7 @@ public:
     std::string habitat(){return _habitat;}
     std::string alimento(){return _alimento;}
     int populacao(){return _populacao;}
+    void printa_formatado();
 };
 
 #endif
